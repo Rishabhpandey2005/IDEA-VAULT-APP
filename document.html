@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDEA VAULT</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(to bottom, #000000 20%, #7A288A 80%);
+            background-attachment: fixed;
+            font-family: arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);       
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .idea-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .idea-list li{
+            padding: 10px;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .idea-list li:last-child {
+            border-bottom: none;
+        }
+
+        .save-idea-btn {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .save-idea-btn:hover {
+            background-color: #3e8e41;
+        }
+
+        .delete-idea-btn{
+            background-color: #f44336;
+            color: #ffffff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-idea-btn:hover {
+            background-color: #e91e63;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>IDEA VAULT</h1>
+        </div>
+        <input type="text"  id="idea-input" placeholder="Enter your idea">
+        <button class="save-idea-btn" onclick="saveidea()">Save idea</button>
+        <ul class="idea-list" id="idea-list"></ul>
+    </div>
+    <script> 
+        let ideas = [];
+        const idealist = document.getElementById("idea-list");
+        
+        function saveidea() {
+            const ideainput = document.getElementById("idea-input");
+            const idea = ideainput.value.trim();
+            if (idea !== "") 
+            {
+                ideas.push(idea);
+                ideainput.value = "";
+                renderIdeaList();
+            }
+        }
+
+        function renderIdeaList()
+        {
+            idealist.innerHTML = "";
+            ideas.forEach((idea, index) => {
+                const idealistitem = document.createElement("li");
+                idealistitem.textContent = idea;
+                const deletebutton = document.createElement("button");
+                deletebutton.textContent = "DELETE";
+
+                deletebutton.classList.add("delete-idea-btn");
+                deletebutton.onclick = () => deleteidea(index);
+                idealistitem.appendChild(deletebutton);
+                idealist.appendChild(idealistitem);
+            });
+        }
+
+        function deleteidea(index) {
+            ideas.splice(index, 1);
+            renderIdeaList();
+        }
+    </script>
+</body>
+</html>
